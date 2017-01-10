@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/jquery.js"></script>
+	<script	src="/moment.js"></script>
+	<script	src="/chart.js"></script>
+	<head>
+		<title>Rodeløkka Børs</title>
+		<style>
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			body { font: 13px Helvetica, Arial; }
+			form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+			form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+			form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+		</style>
+	</head>
+	<body>
+		<canvas id="myChart" width="16" height="9" ></canvas>
+	</body>
+	<script> 
+		var minØlPrice = 37;
+		var minVinPrice = 40;
+		var minVannPrice = 10;
+
+//		var ølPrice = localStorage.ølPrice;  
+//		var vinPrice = localStorage.vinPrice;  
+//		var vannPrice = localStorage.vannPrice;  
+
+		var ølPrice = minØlPrice * 1.5;
+		var vinPrice = minVinPrice * 1.5;
+		var vannPrice = minVannPrice * 1.5;
+
+		var priceInc = 1;
+		var priceDec = priceInc * 0.25;
+
+		var ctx = document.getElementById("myChart");
+
+		var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
+
+		var chartData = {
+			labels: [curTime],
+			datasets: [{
+				label: 'Øl',
+				data:[ølPrice],
+				backgroundColor: 'rgba(255, 207, 112, 0.1)',
+				borderColor: 'rgba(255, 207, 112, 1)',
+				borderWidth: 1,
+				pointRadius: 0
+			},
+			{
+				label: 'Vin',
+				data:[vinPrice],
+				backgroundColor: 'rgba(255, 112, 255, 0.1)',
+				borderColor: 'rgba(255, 112, 255, 1)',
+				borderWidth: 1,
+				pointRadius: 0
+			},
+			{
+				label: 'Vann',
+				data:[vannPrice],
+				backgroundColor: 'rgba(112, 112, 255, 0.1',
+				borderColor: 'rgba(112, 112, 255, 1)',
+				borderWidth: 1,
+				pointRadius: 0
+			}]
+		};
+
+		var chartOptions = {
+			title: {
+				display: true,
+				text: 'Rodeløkka Børs',
+				fontSize: 32
+			},
+			legend: {
+				position: 'right',
+				labels: {
+					padding: 100,
+					generateLabels: getNewLabels,
+					fontSize: 32,
+				}
+			},
+			maintainAspectRatio: true,
+			spanGaps: true,
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero:true
+					}
+				}],
+			},
+			animation: {
+				duration: 0
+			}
+
+		};
+
+		function getNewLabels(chart) {
+			labels = Chart.defaults.global.legend.labels.generateLabels(chart);
+			labels[0].text += ": " + ølPrice.toFixed(2).replace(/\./g, ",") + " NOK";
+			labels[1].text += ": " + vinPrice.toFixed(2).replace(/\./g, ",") + " NOK";
+			labels[2].text += ": " + vannPrice.toFixed(2).replace(/\./g, ",") + " NOK";
+			return labels;
+		};
+
+		new Chart(ctx, {
+			type: 'line',
+			data: chartData,
+			options: chartOptions
+		});
+
+
+		var socket = io();
+		socket.on('ølPress', function(msg){
+			console.log('Received øl');
+			ølPrice += priceInc;
+		});
+
+		socket.on('vinPress', function(msg){
+			console.log('Received vin');
+			vinPrice += priceInc;
+		});
+
+		socket.on('vannPress', function(msg){
+			console.log('Received vann');
+			vannPrice += priceInc;
+		});
+
+		setInterval(function(){
+			chartData.datasets[0].data.push(ølPrice);
+			chartData.datasets[1].data.push(vinPrice);
+			chartData.datasets[2].data.push(vannPrice);
+
+			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
+			chartData.labels.push(curTime);
+
+			new Chart(ctx, {
+				type: 'line',
+				data: chartData,
+				options: chartOptions
+			});
+
+			if(ølPrice > minØlPrice) {
+				ølPrice -= priceDec;
+			}
+
+			if(vinPrice > minVinPrice) {
+				vinPrice -= priceDec;
+			}
+
+			if(vannPrice > minVannPrice) {
+				vannPrice -= priceDec;
+			}
+
+			localStorage.ølPrice = ølPrice;
+			localStorage.vinPrice = vinPrice;
+			localStorage.vannPrice = vannPrice;
+		}, 3000);
+	</script>
+
+</html>

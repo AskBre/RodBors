@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+	<head>
+		<--! TODO Make this offline -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="/jquery.js"></script>
+		<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+
+		<title>Bar Rodeløkka Børs</title>
+
+		<style>
+		*{
+			text-align: center;
+		}
+		</style>
+	</head>
+	<body>
+		<div data-role="main" class="ui-content">
+			<div data-role="header">
+				<h1>Rodeløkka Børs</h1>
+			</div>
+
+			<button class="ui-btn ui-shadow" id="ølButton">Øl</button>
+			<p>The current beerprice</p>
+			<br>
+			<button class="ui-btn ui-shadow" id="vinButton">Vin</button>
+			<p>Vin</p>
+			<br>
+			<button class="ui-btn ui-shadow" id="vannButton">Vann</button>
+			<p>Vann</p>
+		</div>
+
+		<script>
+		var socket = io();
+		$('#ølButton').click(function(){
+			socket.emit('ølPress', "");
+			console.log('Øl button press');
+		});
+		$('#vinButton').click(function(){
+			socket.emit('vinPress', "");
+			console.log('Vin button press');
+		});
+		$('#vannButton').click(function(){
+			socket.emit('vannPress', "");
+			console.log('Vann button press');
+		});
+		</script>
+	</body>
+</html>
