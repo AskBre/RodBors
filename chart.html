@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/jquery.js"></script>
 	<script	src="/moment.js"></script>
@@ -22,15 +21,15 @@
 		var minVinPrice = 40;
 		var minVannPrice = 10;
 
-		var ølPrice = Number(localStorage.ølPrice);
-		var vinPrice = Number(localStorage.vinPrice);
-		var vannPrice = Number(localStorage.vannPrice);
-
-		/*
 		var ølPrice = minØlPrice * 1.5;
 		var vinPrice = minVinPrice * 1.5;
 		var vannPrice = minVannPrice * 1.5;
-		*/
+
+		if(localStorage.getItem("ølPrice") !== null) {
+			ølPrice = Number(localStorage.ølPrice);
+			vinPrice = Number(localStorage.vinPrice);
+			vannPrice = Number(localStorage.vannPrice);
+		}
 
 		var priceInc = 1;
 		var priceDec = priceInc * 0.25;
@@ -39,32 +38,40 @@
 
 		var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 
-		var chartData = {
-			labels: [curTime],
-			datasets: [{
-				label: 'Øl',
-				data:[ølPrice],
-				backgroundColor: 'rgba(255, 207, 112, 0.1)',
-				borderColor: 'rgba(255, 207, 112, 1)',
-				borderWidth: 1,
-				pointRadius: 0
-			},
-			{
-				label: 'Vin',
-				data:[vinPrice],
-				backgroundColor: 'rgba(255, 112, 255, 0.1)',
-				borderColor: 'rgba(255, 112, 255, 1)',
-				borderWidth: 1,
-				pointRadius: 0
-			},
-			{
-				label: 'Vann',
-				data:[vannPrice],
-				backgroundColor: 'rgba(112, 112, 255, 0.1',
-				borderColor: 'rgba(112, 112, 255, 1)',
-				borderWidth: 1,
-				pointRadius: 0
-			}]
+		var chartData;
+
+		if(localStorage.getItem("chartData") !== null) {
+			console.log("Fetching old chartData");
+			chartData = JSON.parse(localStorage.getItem("chartData"));
+		} else {
+			console.log("Creating new chartData");
+			chartData = {
+				labels: [curTime],
+				datasets: [{
+					label: 'Øl',
+					data:[ølPrice],
+					backgroundColor: 'rgba(255, 207, 112, 0.1)',
+					borderColor: 'rgba(255, 207, 112, 1)',
+					borderWidth: 1,
+					pointRadius: 0
+				},
+				{
+					label: 'Vin',
+					data:[vinPrice],
+					backgroundColor: 'rgba(255, 112, 255, 0.1)',
+					borderColor: 'rgba(255, 112, 255, 1)',
+					borderWidth: 1,
+					pointRadius: 0
+				},
+				{
+					label: 'Vann',
+					data:[vannPrice],
+					backgroundColor: 'rgba(112, 112, 255, 0.1',
+					borderColor: 'rgba(112, 112, 255, 1)',
+					borderWidth: 1,
+					pointRadius: 0
+				}]
+			};
 		};
 
 		var chartOptions = {
@@ -135,6 +142,8 @@
 			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 			chartData.labels.push(curTime);
 
+
+			$('.chartjs-hidden-iframe').remove();
 			new Chart(ctx, {
 				type: 'line',
 				data: chartData,
@@ -156,7 +165,10 @@
 			localStorage.ølPrice = ølPrice;
 			localStorage.vinPrice = vinPrice;
 			localStorage.vannPrice = vannPrice;
-		}, 3000);
-	</script>
+		}, 1000);
 
+		setInterval(function() {
+//			localStorage.setItem("chartData", JSON.stringify(chartData));
+		}, 5000);
+	</script>
 </html>

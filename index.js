@@ -15,7 +15,7 @@ app.get('/jquery.js', function(req, res){
 });
 
 app.get('/chart.js', function(req, res){
-	res.sendFile(__dirname + '/Chart.min.js');
+	res.sendFile(__dirname + '/chart.js');
 });
 
 app.get('/market.js', function(req, res){
