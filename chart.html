@@ -36,9 +36,9 @@
 
 		var ctx = document.getElementById("myChart");
 
-		var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
-
 		var chartData;
+
+		var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 
 		if(localStorage.getItem("chartData") !== null) {
 			console.log("Fetching old chartData");
@@ -104,14 +104,14 @@
 		};
 
 		function getNewLabels(chart) {
-			labels = Chart.defaults.global.legend.labels.generateLabels(chart);
-			labels[0].text += ": " + ølPrice.toFixed(2).replace(/\./g, ",") + " NOK";
-			labels[1].text += ": " + vinPrice.toFixed(2).replace(/\./g, ",") + " NOK";
-			labels[2].text += ": " + vannPrice.toFixed(2).replace(/\./g, ",") + " NOK";
-			return labels;
+			var lab = Chart.defaults.global.legend.labels.generateLabels(chart);
+			lab[0].text += ": " + ølPrice.toFixed(2).replace(/\./g, ",") + " NOK";
+			lab[1].text += ": " + vinPrice.toFixed(2).replace(/\./g, ",") + " NOK";
+			lab[2].text += ": " + vannPrice.toFixed(2).replace(/\./g, ",") + " NOK";
+			return lab;
 		};
 
-		new Chart(ctx, {
+		var myChart = new Chart(ctx, {
 			type: 'line',
 			data: chartData,
 			options: chartOptions
@@ -139,16 +139,10 @@
 			chartData.datasets[1].data.push(vinPrice);
 			chartData.datasets[2].data.push(vannPrice);
 
-			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
+			curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 			chartData.labels.push(curTime);
 
-
-			$('.chartjs-hidden-iframe').remove();
-			new Chart(ctx, {
-				type: 'line',
-				data: chartData,
-				options: chartOptions
-			});
+			var latestLabel = chartData.labels[2];
 
 			if(ølPrice > minØlPrice) {
 				ølPrice -= priceDec;
@@ -161,6 +155,8 @@
 			if(vannPrice > minVannPrice) {
 				vannPrice -= priceDec;
 			}
+
+			myChart.update();
 
 			localStorage.ølPrice = ølPrice;
 			localStorage.vinPrice = vinPrice;
