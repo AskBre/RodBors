@@ -6,8 +6,12 @@ app.get('/', function(req, res){
 	res.sendFile(__dirname + '/chart.html');
 });
 
-app.get('/app', function(req, res){
-	res.sendFile(__dirname + '/app.html');
+app.get('/bar', function(req, res){
+	res.sendFile(__dirname + '/bar.html');
+});
+
+app.get('/regulering', function(req, res){
+	res.sendFile(__dirname + '/regulering.html');
 });
 
 app.get('/jquery.js', function(req, res){
@@ -31,14 +35,25 @@ app.get('/require.js', function(req, res){
 });
 
 io.on('connection', function(socket){
+	// Bar
 	socket.on('ølPress', function() {
 		io.emit('ølPress');
 	});
+
 	socket.on('vinPress', function() {
 		io.emit('vinPress');
 	});
+
 	socket.on('vannPress', function() {
 		io.emit('vannPress');
+	});
+
+	// Regulering
+	socket.on('incPerTickDec', function() {
+		io.emit('incPerTickDec');
+	});
+	socket.on('incPerTickInc', function() {
+		io.emit('incPerTickInc');
 	});
 });
 

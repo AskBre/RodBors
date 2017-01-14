@@ -1,4 +1,5 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/jquery.js"></script>
 	<script	src="/moment.js"></script>
@@ -31,8 +32,8 @@
 			vannPrice = Number(localStorage.vannPrice);
 		}
 
-		var priceInc = 1;
-		var priceDec = priceInc * 0.25;
+		var incPerTick = 1;
+		var decPerTick = incPerTick * 0.25;
 
 		var ctx = document.getElementById("myChart");
 
@@ -130,15 +131,15 @@
 			var latestLabel = chartData.labels[2];
 
 			if(ølPrice > minØlPrice) {
-				ølPrice -= priceDec;
+				ølPrice -= decPerTick;
 			}
 
 			if(vinPrice > minVinPrice) {
-				vinPrice -= priceDec;
+				vinPrice -= decPerTick;
 			}
 
 			if(vannPrice > minVannPrice) {
-				vannPrice -= priceDec;
+				vannPrice -= decPerTick;
 			}
 
 			myChart.update();
@@ -146,7 +147,7 @@
 			localStorage.ølPrice = ølPrice;
 			localStorage.vinPrice = vinPrice;
 			localStorage.vannPrice = vannPrice;
-		}, 1000);
+		}, 2000);
 
 		setInterval(function() {
 			console.log('Saving data');
@@ -154,26 +155,38 @@
 			localStorage.setItem("ølData", JSON.stringify(chartData.datasets[0].data));
 			localStorage.setItem("vinData", JSON.stringify(chartData.datasets[1].data));
 			localStorage.setItem("vannData", JSON.stringify(chartData.datasets[2].data));
-		}, 5000);
+		}, 10000);
 
 		///////////
 		//Sockets//
 		///////////
 
+		// Bar
 		var socket = io();
 		socket.on('ølPress', function(msg){
-			console.log('Received øl');
-			ølPrice += priceInc;
+			ølPrice += incPerTick;
 		});
 
+
 		socket.on('vinPress', function(msg){
-			console.log('Received vin');
-			vinPrice += priceInc;
+			vinPrice += incPerTick;
 		});
 
 		socket.on('vannPress', function(msg){
-			console.log('Received vann');
-			vannPrice += priceInc;
+			vannPrice += incPerTick;
+		});
+
+		// Regulering
+		socket.on('incPerTickDec', function(msg){
+			console.log('Decreasing inc per tick');
+			incPerTick *= 0.90;
+			console.log(incPerTick);
+		});
+
+		socket.on('incPerTickInc', function(msg){
+			console.log('Increasing inc per tick');
+			incPerTick *= 1.10;
+			console.log(incPerTick);
 		});
 		
 	</script>

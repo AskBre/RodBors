@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<script src="/jquery.js"></script>
+		<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+
+		<title>Statens reguleringsapp</title>
+
+		<style>
+		*{
+			text-align: center;
+		}
+		</style>
+	</head>
+	<body>
+		<div data-role="main" class="ui-content">
+			<div data-role="header">
+				<h1>Markedsregulering</h1>
+			</div>
+
+			<h3>Increment per tick</h3>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-btn-icon-notext ui-icon-minus" id="incPerTickDec"/>
+			<button class="ui-btn ui-btn-inline ui-corner-all ui-btn-icon-notext ui-icon-plus" id="incPerTickInc"/>
+		</div>
+
+		<script>
+		var socket = io();
+		$('#incPerTickDec').click(function(){
+			socket.emit('incPerTickDec', "");
+			console.log('incPerTickDec');
+		});
+		$('#incPerTickInc').click(function(){
+			socket.emit('incPerTickInc', "");
+			console.log('incPerTickInc');
+		});
+
+
+		$('#messages').append($('<li>').text(msg));
+		</script>
+	</body>
+</html>
