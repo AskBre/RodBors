@@ -36,16 +36,9 @@
 
 		var ctx = document.getElementById("myChart");
 
-		var chartData;
-
 		var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 
-		if(localStorage.getItem("chartData") !== null) {
-			console.log("Fetching old chartData");
-			chartData = JSON.parse(localStorage.getItem("chartData"));
-		} else {
-			console.log("Creating new chartData");
-			chartData = {
+		var chartData = {
 				labels: [curTime],
 				datasets: [{
 					label: 'Øl',
@@ -71,7 +64,14 @@
 					borderWidth: 1,
 					pointRadius: 0
 				}]
-			};
+		};
+
+		if(localStorage.getItem("labels") !== null) {
+			console.log("Fetching old chartData");
+			chartData.labels = JSON.parse(localStorage.getItem("labels"));
+			chartData.datasets[0].data = JSON.parse(localStorage.getItem("ølData"));
+			chartData.datasets[1].data = JSON.parse(localStorage.getItem("vinData"));
+			chartData.datasets[2].data = JSON.parse(localStorage.getItem("vannData"));
 		};
 
 		var chartOptions = {
@@ -98,7 +98,7 @@
 				}],
 			},
 			animation: {
-				duration: 0
+				duration: 1000
 			}
 
 		};
@@ -118,21 +118,6 @@
 		});
 
 
-		var socket = io();
-		socket.on('ølPress', function(msg){
-			console.log('Received øl');
-			ølPrice += priceInc;
-		});
-
-		socket.on('vinPress', function(msg){
-			console.log('Received vin');
-			vinPrice += priceInc;
-		});
-
-		socket.on('vannPress', function(msg){
-			console.log('Received vann');
-			vannPrice += priceInc;
-		});
 
 		setInterval(function(){
 			chartData.datasets[0].data.push(ølPrice);
@@ -164,7 +149,32 @@
 		}, 1000);
 
 		setInterval(function() {
-//			localStorage.setItem("chartData", JSON.stringify(chartData));
+			console.log('Saving data');
+			localStorage.setItem("labels", JSON.stringify(chartData.labels));
+			localStorage.setItem("ølData", JSON.stringify(chartData.datasets[0].data));
+			localStorage.setItem("vinData", JSON.stringify(chartData.datasets[1].data));
+			localStorage.setItem("vannData", JSON.stringify(chartData.datasets[2].data));
 		}, 5000);
+
+		///////////
+		//Sockets//
+		///////////
+
+		var socket = io();
+		socket.on('ølPress', function(msg){
+			console.log('Received øl');
+			ølPrice += priceInc;
+		});
+
+		socket.on('vinPress', function(msg){
+			console.log('Received vin');
+			vinPrice += priceInc;
+		});
+
+		socket.on('vannPress', function(msg){
+			console.log('Received vann');
+			vannPrice += priceInc;
+		});
+		
 	</script>
 </html>
