@@ -18,176 +18,214 @@
 		<canvas id="myChart" width="160" height="83" ></canvas>
 	</body>
 	<script> 
-		var minØlPrice = 37;
-		var minVinPrice = 40;
-		var minVannPrice = 10;
 
-		var ølPrice = minØlPrice * 1.5;
-		var vinPrice = minVinPrice * 1.5;
-		var vannPrice = minVannPrice * 1.5;
+		var socket = io();
 
-		if(localStorage.getItem("ølPrice") !== null) {
-			ølPrice = Number(localStorage.ølPrice);
-			vinPrice = Number(localStorage.vinPrice);
-			vannPrice = Number(localStorage.vannPrice);
-		}
-
-		var incPerTick = 1;
-		var decPerTick = incPerTick * 0.25;
-
-		var ctx = document.getElementById("myChart");
-
-		var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
-
-		var chartData = {
-				labels: [curTime],
-				datasets: [{
+		var items = [
+			{
+				price: 100,
+				minPrice: 37,
+				dataset: {
 					label: 'Øl',
-					data:[ølPrice],
+					data: [0],
 					backgroundColor: 'rgba(255, 207, 112, 0.1)',
 					borderColor: 'rgba(255, 207, 112, 1)',
 					borderWidth: 1,
 					pointRadius: 0
-				},
-				{
+
+				}
+			},
+			{
+				price: 100,
+				minPrice: 50,
+				dataset: {
 					label: 'Vin',
-					data:[vinPrice],
+					data: [0],
 					backgroundColor: 'rgba(255, 112, 255, 0.1)',
 					borderColor: 'rgba(255, 112, 255, 1)',
 					borderWidth: 1,
 					pointRadius: 0
-				},
-				{
+				}
+			},
+			{
+				price: 100,
+				minPrice: 10,
+				dataset: {
 					label: 'Vann',
-					data:[vannPrice],
+					data: [0],
 					backgroundColor: 'rgba(112, 112, 255, 0.1',
 					borderColor: 'rgba(112, 112, 255, 1)',
 					borderWidth: 1,
 					pointRadius: 0
-				}]
-		};
-
-		if(localStorage.getItem("labels") !== null) {
-			console.log("Fetching old chartData");
-			chartData.labels = JSON.parse(localStorage.getItem("labels"));
-			chartData.datasets[0].data = JSON.parse(localStorage.getItem("ølData"));
-			chartData.datasets[1].data = JSON.parse(localStorage.getItem("vinData"));
-			chartData.datasets[2].data = JSON.parse(localStorage.getItem("vannData"));
-		};
-
-		var chartOptions = {
-			title: {
-				display: true,
-				text: 'Rodeløkka Børs',
-				fontSize: 32
-			},
-			legend: {
-				position: 'right',
-				labels: {
-					padding: 100,
-					generateLabels: getNewLabels,
-					fontSize: 32,
 				}
-			},
-			maintainAspectRatio: true,
-			spanGaps: true,
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero:true
-					}
-				}],
-			},
-			animation: {
-				duration: 1000
+			}
+		];
+
+//deleteLocalStorage();
+
+		var incPerClick = 1;
+		// Get defaults from index.js 
+		socket.emit('reqDefaults');
+		socket.on('defIncPerClick', function(val) {
+			incPerClick = val;
+			console.log('Val is');
+			console.log(val);
+			makeChart();
+		});
+
+		console.log('Inc is');
+		console.log(incPerClick);
+		var decPerTick = incPerClick * 0.25;
+
+		var ctx = document.getElementById("myChart");
+
+		function makeChart() {
+			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
+
+			chartData = {
+				labels: [curTime],
+				datasets:[]
+			};
+
+			for(var i=0; i<items.length; i++) {
+				chartData.datasets.push(items[i].dataset);
 			}
 
+			fillItemsData();
+
+			chartOptions = {
+				title: {
+					display: true,
+					text: 'Rodeløkka Børs',
+					fontSize: 32
+				},
+				legend: {
+					position: 'right',
+					labels: {
+						padding: 100,
+						generateLabels: getNewLabels,
+						fontSize: 32,
+					}
+				},
+				maintainAspectRatio: true,
+				spanGaps: true,
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero:true
+						}
+					}],
+				},
+				animation: {
+					duration: 1000
+				}
+			};
+
+			myChart = new Chart(ctx, {
+				type: 'line',
+				data: chartData,
+				options: chartOptions
+			});
+
 		};
 
+
+		
+		
+		
 		function getNewLabels(chart) {
 			var lab = Chart.defaults.global.legend.labels.generateLabels(chart);
-			lab[0].text += ": " + ølPrice.toFixed(2).replace(/\./g, ",") + " NOK";
-			lab[1].text += ": " + vinPrice.toFixed(2).replace(/\./g, ",") + " NOK";
-			lab[2].text += ": " + vannPrice.toFixed(2).replace(/\./g, ",") + " NOK";
+			for(var i=0; i<lab.length;i++) {
+				lab[i].text += ": " + items[i].price.toFixed(2).replace(/\./g, ",") + " NOK";
+			}
 			return lab;
 		};
 
-		var myChart = new Chart(ctx, {
-			type: 'line',
-			data: chartData,
-			options: chartOptions
-		});
-
-
+		
 
 		setInterval(function(){
-			chartData.datasets[0].data.push(ølPrice);
-			chartData.datasets[1].data.push(vinPrice);
-			chartData.datasets[2].data.push(vannPrice);
+			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 
-			curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 			chartData.labels.push(curTime);
 
-			var latestLabel = chartData.labels[2];
+			for(var i=0; i<items.length; i++) {
+				items[i].dataset.data.push(items[i].price);
 
-			if(ølPrice > minØlPrice) {
-				ølPrice -= decPerTick;
+				if(items[i].price > items[i].minPrice) {
+					items[i].price -= decPerTick;
+				}
 			}
-
-			if(vinPrice > minVinPrice) {
-				vinPrice -= decPerTick;
-			}
-
-			if(vannPrice > minVannPrice) {
-				vannPrice -= decPerTick;
-			}
-
 			myChart.update();
-
-			localStorage.ølPrice = ølPrice;
-			localStorage.vinPrice = vinPrice;
-			localStorage.vannPrice = vannPrice;
 		}, 2000);
 
 		setInterval(function() {
 			console.log('Saving data');
 			localStorage.setItem("labels", JSON.stringify(chartData.labels));
-			localStorage.setItem("ølData", JSON.stringify(chartData.datasets[0].data));
-			localStorage.setItem("vinData", JSON.stringify(chartData.datasets[1].data));
-			localStorage.setItem("vannData", JSON.stringify(chartData.datasets[2].data));
-		}, 10000);
+			for(var i=0; i<items.length; i++) {
+				var name = 'item' + i;
+				localStorage.setItem(name, JSON.stringify(items[i].dataset.data));
+			}
+		}, 5000);
+
+		function fillItemsData() {
+			if(localStorage.getItem("labels") !== null) {
+				console.log("Fetching old chartData");
+				chartData.labels = JSON.parse(localStorage.getItem('labels'));
+
+				for(var i=0; i<items.length; i++) {
+					var name = 'item' + i;
+					items[i].dataset.data = JSON.parse(localStorage.getItem(name));
+
+					var len = items[i].dataset.data.length;
+					items[i].price = items[i].dataset.data[len - 1];
+				}
+			} else {
+				console.log("Making new data");
+				for(var i=0; i<items.length; i++) {
+					items[i].dataset.data = [100];
+				}
+			}
+		};
+
+		function deleteLocalStorage() {
+			console.log("DELETING ALL LOCAL STORAGE!");
+			localStorage.removeItem('labels');
+			for(var i=0; i<items.length; i++) {
+				var name = 'item' + i;
+				localStorage.removeItem(name);
+			}
+		};
 
 		///////////
 		//Sockets//
 		///////////
 
 		// Bar
-		var socket = io();
 		socket.on('ølPress', function(msg){
-			ølPrice += incPerTick;
+			ølPrice += incPerClick;
 		});
 
 
 		socket.on('vinPress', function(msg){
-			vinPrice += incPerTick;
+			vinPrice += incPerClick;
 		});
 
 		socket.on('vannPress', function(msg){
-			vannPrice += incPerTick;
+			vannPrice += incPerClick;
 		});
 
 		// Regulering
-		socket.on('incPerTickDec', function(msg){
-			console.log('Decreasing inc per tick');
-			incPerTick *= 0.90;
-			console.log(incPerTick);
+		socket.on('setIncPerClick', function(msg){
+			incPerClick = msg;
+			console.log(incPerClick);
 		});
 
-		socket.on('incPerTickInc', function(msg){
-			console.log('Increasing inc per tick');
-			incPerTick *= 1.10;
-			console.log(incPerTick);
+		socket.on('delLocalStorage', function(msg){
+			console.log("Deleted localstorage");
+
+			ølPrice = minØlPrice * 1.5;
+			vinPrice = minVinPrice * 1.5;
+			vannPrice = minVannPrice * 1.5;
 		});
-		
 	</script>
 </html>
