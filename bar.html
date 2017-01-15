@@ -22,17 +22,15 @@
 			</div>
 
 			<button class="ui-btn ui-shadow" id="ølButton">Øl</button>
-			<p>The current beerprice</p>
 			<br>
 			<button class="ui-btn ui-shadow" id="vinButton">Vin</button>
-			<p>Vin</p>
 			<br>
 			<button class="ui-btn ui-shadow" id="vannButton">Vann</button>
-			<p>Vann</p>
 		</div>
 
 		<script>
 		var socket = io();
+
 		$('#ølButton').click(function(){
 			socket.emit('ølPress', "");
 			console.log('Øl button press');
@@ -41,6 +39,7 @@
 			socket.emit('vinPress', "");
 			console.log('Vin button press');
 		});
+
 		$('#vannButton').click(function(){
 			socket.emit('vannPress', "");
 			console.log('Vann button press');
