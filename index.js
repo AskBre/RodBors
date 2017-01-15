@@ -69,12 +69,10 @@ io.on('connection', function(socket){
 	// Regulering
 	socket.on('setIncPerClick', function(msg) {
 		io.emit('setIncPerClick', msg);
-		console.log('Incing');
 	});
 
 	socket.on('setDecPerTick', function(msg) {
 		io.emit('setDecPerTick', msg);
-		console.log('Deccing');
 	});
 
 	socket.on('delLocalStorage', function() {

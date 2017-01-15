@@ -28,38 +28,45 @@
 				<h1>Markedsregulering</h1>
 			</div>
 
-			<p>Increment per click</p>
-			<input type="range" name="incPerClick" id="incPerClick" value="100" min="0" max="500">
+			
+			<div id="incPerClick">
+				<p>Increment per click</p>
+				<input type="range" name="incPerClick" id="incPerClickSlider" value="100" min="0" max="500">
+			</div>
 			<br>
-			<p>Decrement per tick</p>
-			<input type="range" name="decPerTick" id="decPerTick" value="100" min="0" max="500">
+			<div id="decPerTick">
+				<p>Decrement per tick</p>
+				<input type="range" name="decPerTick" id="decPerTickSlider" value="100" min="0" max="500">
+			</div>
 		</div>
 		<script>
 			var socket = io();
 			var incPerClick;
 			var decPerTick;
 
+			// Senders
+			$('#incPerClick').change(function(){
+				socket.emit('setIncPerClick', $('#incPerClickSlider').val() * 0.01);
+				console.log('Incing');
+			});
+			$('#decPerTick').change(function(){
+				socket.emit('setDecPerTick', $('#decPerTickSlider').val() * 0.01);
+				console.log('Deccing');
+			});
+
+			// Receivers
 			socket.emit('reqDefaults');
 			socket.on('defIncPerClick', function(val) {
 				incPerClick = val;
-				$('#incPerClick').val(incPerClick * 100);
+				$('#incPerClickSlider').val(incPerClick * 100);
+				$('#incPerClickSlider').slider('refresh');
 			});
-
 			socket.on('defDecPerTick', function(val) {
 				decPerTick = val;
-				$('#decPerTick').val(decPerTick * 100);
+				$('#decPerTickSlider').val(decPerTick * 100);
+				$('#decPerTickSlider').slider('refresh');
 			});
 
-			// Senders
-			$('#incPerClick').change(function(){
-				socket.emit('setIncPerClick', $('#incPerClick').val() * 0.01);
-				console.log('Incing');
-			});
-
-			$('#decPerTick').change(function(){
-				socket.emit('setDecPerTick', $('#decPerTick').val() * 0.01);
-				console.log('Deccing');
-			});
 		</script>
 	</body>
 </html>

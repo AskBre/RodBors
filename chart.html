@@ -70,7 +70,6 @@
 		socket.emit('reqDefaults');
 		socket.on('defIncPerClick', function(val) {
 			incPerClick = val;
-			console.log('Inc is' + incPerClick);
 		});
 
 		socket.on('defDecPerTick', function(val) {
@@ -227,7 +226,6 @@
 
 		socket.on('setDecPerTick', function(msg){
 			decPerTick = msg;
-			console.log(decPerTick);
 		});
 
 	</script>
