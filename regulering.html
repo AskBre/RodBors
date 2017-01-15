@@ -1,10 +1,17 @@
 <!doctype html>
 <html>
 	<head>
+		<!--<script src="/jquery.js"></script>
+		<link rel="stylesheet" href="/jquery-mobile.css">
+		<script src="/jquery-mobile.js"></script>
+		-->
+
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-		<script src="/jquery.js"></script>
-		<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
 		<script src="/socket.io/socket.io.js"></script>
 
 		<title>Statens reguleringsapp</title>
@@ -21,24 +28,38 @@
 				<h1>Markedsregulering</h1>
 			</div>
 
-			<h3>Increment per tick</h3>
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-btn-icon-notext ui-icon-minus" id="incPerTickDec"/>
-			<button class="ui-btn ui-btn-inline ui-corner-all ui-btn-icon-notext ui-icon-plus" id="incPerTickInc"/>
+			<p>Increment per click</p>
+			<input type="range" name="incPerClick" id="incPerClick" value="100" min="0" max="500">
+			<br>
+			<p>Decrement per tick</p>
+			<input type="range" name="decPerTick" id="decPerTick" value="100" min="0" max="500">
 		</div>
-
 		<script>
-		var socket = io();
-		$('#incPerTickDec').click(function(){
-			socket.emit('incPerTickDec', "");
-			console.log('incPerTickDec');
-		});
-		$('#incPerTickInc').click(function(){
-			socket.emit('incPerTickInc', "");
-			console.log('incPerTickInc');
-		});
+			var socket = io();
+			var incPerClick;
+			var decPerTick;
 
+			socket.emit('reqDefaults');
+			socket.on('defIncPerClick', function(val) {
+				incPerClick = val;
+				$('#incPerClick').val(incPerClick * 100);
+			});
 
-		$('#messages').append($('<li>').text(msg));
+			socket.on('defDecPerTick', function(val) {
+				decPerTick = val;
+				$('#decPerTick').val(decPerTick * 100);
+			});
+
+			// Senders
+			$('#incPerClick').change(function(){
+				socket.emit('setIncPerClick', $('#incPerClick').val() * 0.01);
+				console.log('Incing');
+			});
+
+			$('#decPerTick').change(function(){
+				socket.emit('setDecPerTick', $('#decPerTick').val() * 0.01);
+				console.log('Deccing');
+			});
 		</script>
 	</body>
 </html>

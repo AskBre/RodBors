@@ -63,19 +63,23 @@
 
 //deleteLocalStorage();
 
-		var incPerClick = 1;
+		var incPerClick = 0;
+		var decPerTick = 0;
+
 		// Get defaults from index.js 
 		socket.emit('reqDefaults');
 		socket.on('defIncPerClick', function(val) {
 			incPerClick = val;
-			console.log('Val is');
-			console.log(val);
-			makeChart();
+			console.log('Inc is' + incPerClick);
 		});
 
-		console.log('Inc is');
-		console.log(incPerClick);
-		var decPerTick = incPerClick * 0.25;
+		socket.on('defDecPerTick', function(val) {
+			decPerTick = val;
+			if(typeof chartData === "undefined") {
+				makeChart();
+			}
+		});
+
 
 		var ctx = document.getElementById("myChart");
 
@@ -165,7 +169,7 @@
 				var name = 'item' + i;
 				localStorage.setItem(name, JSON.stringify(items[i].dataset.data));
 			}
-		}, 5000);
+		}, 10000);
 
 		function fillItemsData() {
 			if(localStorage.getItem("labels") !== null) {
@@ -201,17 +205,18 @@
 		///////////
 
 		// Bar
+		//TODO Rewrite for multiple items
 		socket.on('ølPress', function(msg){
-			ølPrice += incPerClick;
+			items[0].price += incPerClick;
 		});
 
 
 		socket.on('vinPress', function(msg){
-			vinPrice += incPerClick;
+			items[1].price += incPerClick;
 		});
 
 		socket.on('vannPress', function(msg){
-			vannPrice += incPerClick;
+			items[2].price += incPerClick;
 		});
 
 		// Regulering
@@ -220,12 +225,10 @@
 			console.log(incPerClick);
 		});
 
-		socket.on('delLocalStorage', function(msg){
-			console.log("Deleted localstorage");
-
-			ølPrice = minØlPrice * 1.5;
-			vinPrice = minVinPrice * 1.5;
-			vannPrice = minVannPrice * 1.5;
+		socket.on('setDecPerTick', function(msg){
+			decPerTick = msg;
+			console.log(decPerTick);
 		});
+
 	</script>
 </html>

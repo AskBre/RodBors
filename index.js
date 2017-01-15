@@ -18,6 +18,14 @@ app.get('/jquery.js', function(req, res){
 	res.sendFile(__dirname + '/jquery-3.1.1.min.js');
 });
 
+app.get('/jquery-mobile.js', function(req, res){
+	res.sendFile(__dirname + '/jquery.mobile-1.4.5.js');
+});
+
+app.get('/jquery-mobile.css', function(req, res){
+	res.sendFile(__dirname + '/jquery.mobile-1.4.5.css');
+});
+
 app.get('/chart.js', function(req, res){
 	res.sendFile(__dirname + '/chart.js');
 });
@@ -34,7 +42,17 @@ app.get('/require.js', function(req, res){
 	res.sendFile(__dirname + '/require.js');
 });
 
+
 io.on('connection', function(socket){
+	// Defaults
+	var incPerClick = 1;
+	var decPerTick = incPerClick * 0.25;
+
+	socket.on('reqDefaults', function() {
+		io.emit('defIncPerClick', incPerClick);
+		io.emit('defDecPerTick', decPerTick);
+	});
+
 	// Bar
 	socket.on('ølPress', function() {
 		io.emit('ølPress');
@@ -49,11 +67,18 @@ io.on('connection', function(socket){
 	});
 
 	// Regulering
-	socket.on('incPerTickDec', function() {
-		io.emit('incPerTickDec');
+	socket.on('setIncPerClick', function(msg) {
+		io.emit('setIncPerClick', msg);
+		console.log('Incing');
 	});
-	socket.on('incPerTickInc', function() {
-		io.emit('incPerTickInc');
+
+	socket.on('setDecPerTick', function(msg) {
+		io.emit('setDecPerTick', msg);
+		console.log('Deccing');
+	});
+
+	socket.on('delLocalStorage', function() {
+		io.emit('delLocalStorage');
 	});
 });
 
