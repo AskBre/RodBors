@@ -54,16 +54,9 @@ io.on('connection', function(socket){
 	});
 
 	// Bar
-	socket.on('ølPress', function() {
-		io.emit('ølPress');
-	});
-
-	socket.on('vinPress', function() {
-		io.emit('vinPress');
-	});
-
-	socket.on('vannPress', function() {
-		io.emit('vannPress');
+	socket.on('Purchase', function(msg) {
+		console.log(msg + ' purchased');
+		io.emit('Purchase', msg);
 	});
 
 	// Regulering

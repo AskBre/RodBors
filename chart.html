@@ -61,7 +61,7 @@
 			}
 		];
 
-//deleteLocalStorage();
+deleteLocalStorage();
 
 		var incPerClick = 0;
 		var decPerTick = 0;
@@ -204,18 +204,15 @@
 		///////////
 
 		// Bar
-		//TODO Rewrite for multiple items
-		socket.on('ølPress', function(msg){
-			items[0].price += incPerClick;
-		});
-
-
-		socket.on('vinPress', function(msg){
-			items[1].price += incPerClick;
-		});
-
-		socket.on('vannPress', function(msg){
-			items[2].price += incPerClick;
+		// Send which button as message, not socket
+		socket.on('Purchase', function(msg) {
+			console.log('Received ' + msg);
+			for(var i=0; i<items.length; i++) {
+				if(items[i].dataset.label === msg) {
+					items[i].price += incPerClick;
+					console.log('Got ' + items[i].name);
+				}
+			}
 		});
 
 		// Regulering

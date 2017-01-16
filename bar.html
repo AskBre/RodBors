@@ -1,5 +1,4 @@
-<!doctype html>
-<html>
+<!doctype html><html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -32,16 +31,16 @@
 		var socket = io();
 
 		$('#ølButton').click(function(){
-			socket.emit('ølPress', "");
+			socket.emit('Purchase', 'Øl');
 			console.log('Øl button press');
 		});
 		$('#vinButton').click(function(){
-			socket.emit('vinPress', "");
+			socket.emit('Purchase', 'Vin');
 			console.log('Vin button press');
 		});
 
 		$('#vannButton').click(function(){
-			socket.emit('vannPress', "");
+			socket.emit('Purchase', 'Vann');
 			console.log('Vann button press');
 		});
 		</script>
