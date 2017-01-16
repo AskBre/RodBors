@@ -48,10 +48,10 @@ var incPerClick = 1;
 var decPerTick = incPerClick * 0.25;
 var items = [
 	{
-		price: 100,
+		price: 59,
 		minPrice: 37,
 		dataset: {
-			label: 'Øl',
+			label: 'Sagene / Carlsberg',
 			data: [0],
 			backgroundColor: 'rgba(255, 207, 112, 0.1)',
 			borderColor: 'rgba(255, 207, 112, 1)',
@@ -61,29 +61,115 @@ var items = [
 		}
 	},
 	{
-		price: 100,
+		price: 89,
+		minPrice: 37,
+		dataset: {
+			label: "Brooklys lager / Eipa / Nøgne Ø / Crabbie's",
+			data: [0],
+			backgroundColor: 'rgba(200, 190, 112, 0.1)',
+			borderColor: 'rgba(200, 190, 112, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+
+		}
+	},
+	{
+		price: 72,
 		minPrice: 50,
 		dataset: {
-			label: 'Vin',
+			label: 'Calles Riesling',
 			data: [0],
-			backgroundColor: 'rgba(255, 112, 255, 0.1)',
-			borderColor: 'rgba(255, 112, 255, 1)',
+			backgroundColor: 'rgba(255, 228, 185, 0.1)',
+			borderColor: 'rgba(255, 228, 185, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
 	},
 	{
-		price: 100,
-		minPrice: 10,
+		price: 340,
+		minPrice: 50,
 		dataset: {
-			label: 'Vann',
+			label: 'Sancerre',
 			data: [0],
-			backgroundColor: 'rgba(112, 112, 255, 0.1',
-			borderColor: 'rgba(112, 112, 255, 1)',
+			backgroundColor: 'rgba(255, 218, 185, 0.1)',
+			borderColor: 'rgba(255, 218, 185, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
-	}
+	},
+	{
+		price: 72,
+		minPrice: 50,
+		dataset: {
+			label: 'Roagna Piemo te Barbera',
+			data: [0],
+			backgroundColor: 'rgba(114, 47, 55, 0.1)',
+			borderColor: 'rgba(114, 47, 55, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+	{
+		price: 340,
+		minPrice: 50,
+		dataset: {
+			label: 'Cotes du Rhone',
+			data: [0],
+			backgroundColor: 'rgba(180, 47, 55, 0.1)',
+			borderColor: 'rgba(180, 47, 55, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+	{
+		price: 45,
+		minPrice: 10,
+		dataset: {
+			label: 'Bourbon / Whisky',
+			data: [0],
+			backgroundColor: 'rgba(224, 137, 65, 0.1',
+			borderColor: 'rgba(224, 137, 65, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+	{
+		price: 90,
+		minPrice: 50,
+		dataset: {
+			label: 'Cognac / Gin / Vodka',
+			data: [0],
+			backgroundColor: 'rgba(173, 216, 230, 0.1',
+			borderColor: 'rgba(173, 216, 230, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+	{
+		price: 39,
+		minPrice: 10,
+		dataset: {
+			label: 'Mineralvann / Carlsbrg alkoholfri',
+			data: [0],
+			backgroundColor: 'rgba(64, 164, 223, 0.1',
+			borderColor: 'rgba(64, 164, 223, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+
+	{
+		price: 100,
+		minPrice: 10,
+		dataset: {
+			label: 'Snacks',
+			data: [0],
+			backgroundColor: 'rgba(30, 128, 30, 0.1',
+			borderColor: 'rgba(30, 128, 30, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
 ];
 
 io.on('connection', function(socket){

@@ -47,7 +47,7 @@
 				isDefDefined = true;
 
 				if(typeof chartData === "undefined") {
-//					deleteLocalStorage();
+					deleteLocalStorage();
 					makeChart();
 				}
 			}
@@ -78,19 +78,20 @@
 				legend: {
 					position: 'right',
 					labels: {
-						padding: 100,
+						padding: 25,
 						generateLabels: getNewLabels,
-						fontSize: 32,
+						fontSize: 28,
 					}
 				},
 				maintainAspectRatio: true,
 				spanGaps: true,
 				scales: {
-					yAxes: [{
+					xAxes: [{
 						ticks: {
 							beginAtZero:true
 						}
-					}],
+					}]
+
 				},
 				animation: {
 					duration: 1000
