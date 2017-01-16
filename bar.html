@@ -19,29 +19,38 @@
 			<div data-role="header">
 				<h1>Rodeløkka Børs</h1>
 			</div>
-
-			<button class="ui-btn ui-shadow" id="ølButton">Øl</button>
-			<br>
-			<button class="ui-btn ui-shadow" id="vinButton">Vin</button>
-			<br>
-			<button class="ui-btn ui-shadow" id="vannButton">Vann</button>
+			<div id="buttons">
+			</div>
 		</div>
 
 		<script>
 		var socket = io();
-
-		$('#ølButton').click(function(){
-			socket.emit('Purchase', 'Øl');
-			console.log('Øl button press');
+		var items;
+		var isButtonsMade = false;
+		/// Setup
+		socket.emit('reqDefaults');
+		socket.on('defItems', function(val) {
+			items = val;
+			if(!isButtonsMade) {
+				isButtonsMade = true;
+				makeButtons();
+			}
 		});
-		$('#vinButton').click(function(){
-			socket.emit('Purchase', 'Vin');
-			console.log('Vin button press');
-		});
 
-		$('#vannButton').click(function(){
-			socket.emit('Purchase', 'Vann');
-			console.log('Vann button press');
+		function makeButtons() {
+			for(var i=0; i<items.length; i++) {
+				jQuery('<button/>', {
+					id: items[i].dataset.label,
+					class: 'ui-btn ui-shadow',
+					text: items[i].dataset.label
+				}).appendTo('#buttons');
+			}
+		}
+
+		/// Senders
+		$('#buttons').on('click', 'button', function() {
+			console.log('Clicked ' + $(this).text());
+			socket.emit('Purchase', $(this).text());
 		});
 		</script>
 	</body>

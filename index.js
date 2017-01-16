@@ -42,20 +42,61 @@ app.get('/require.js', function(req, res){
 	res.sendFile(__dirname + '/require.js');
 });
 
+////////////////////////////////////////////////////////
+
+var incPerClick = 1;
+var decPerTick = incPerClick * 0.25;
+var items = [
+	{
+		price: 100,
+		minPrice: 37,
+		dataset: {
+			label: 'Øl',
+			data: [0],
+			backgroundColor: 'rgba(255, 207, 112, 0.1)',
+			borderColor: 'rgba(255, 207, 112, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+
+		}
+	},
+	{
+		price: 100,
+		minPrice: 50,
+		dataset: {
+			label: 'Vin',
+			data: [0],
+			backgroundColor: 'rgba(255, 112, 255, 0.1)',
+			borderColor: 'rgba(255, 112, 255, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+	{
+		price: 100,
+		minPrice: 10,
+		dataset: {
+			label: 'Vann',
+			data: [0],
+			backgroundColor: 'rgba(112, 112, 255, 0.1',
+			borderColor: 'rgba(112, 112, 255, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	}
+];
 
 io.on('connection', function(socket){
 	// Defaults
-	var incPerClick = 1;
-	var decPerTick = incPerClick * 0.25;
 
 	socket.on('reqDefaults', function() {
 		io.emit('defIncPerClick', incPerClick);
 		io.emit('defDecPerTick', decPerTick);
+		io.emit('defItems', items);
 	});
 
 	// Bar
 	socket.on('Purchase', function(msg) {
-		console.log(msg + ' purchased');
 		io.emit('Purchase', msg);
 	});
 
