@@ -47,7 +47,7 @@
 				isDefDefined = true;
 
 				if(typeof chartData === "undefined") {
-					deleteLocalStorage();
+//					deleteLocalStorage();
 					makeChart();
 				}
 			}
@@ -159,7 +159,7 @@
 			} else {
 				console.log("Making new data");
 				for(var i=0; i<items.length; i++) {
-					items[i].dataset.data = [100];
+					items[i].dataset.data = [items[i].price];
 				}
 			}
 		};

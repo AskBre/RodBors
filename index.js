@@ -157,7 +157,6 @@ var items = [
 			pointRadius: 0
 		}
 	},
-
 	{
 		price: 100,
 		minPrice: 10,
