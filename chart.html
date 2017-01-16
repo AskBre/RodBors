@@ -23,25 +23,33 @@
 		var items;
 	
 
+		var isDefDefined = false;
 		var incPerClick = 0;
 		var decPerTick = 0;
 
 		// Get defaults from index.js 
 		socket.emit('reqDefaults');
 		socket.on('defIncPerClick', function(val) {
-			incPerClick = val;
+			if(!isDefDefined) {
+				incPerClick = val;
+			}
 		});
 
 		socket.on('defDecPerTick', function(val) {
-			decPerTick = val;
+			if(!isDefDefined) {
+				decPerTick = val;
+			}
 		});
 
 		socket.on('defItems', function(val) {
-			items = val;
+			if(!isDefDefined) {
+				items = val;
+				isDefDefined = true;
 
-			if(typeof chartData === "undefined") {
-//				deleteLocalStorage();
-				makeChart();
+				if(typeof chartData === "undefined") {
+//					deleteLocalStorage();
+					makeChart();
+				}
 			}
 		});
 
@@ -173,9 +181,8 @@
 		socket.on('Purchase', function(msg) {
 			console.log('Received ' + msg);
 			for(var i=0; i<items.length; i++) {
-				if(items[i].dataset.label === msg) {
+				if(items[i].dataset.label == msg) {
 					items[i].price += incPerClick;
-					console.log('Got ' + items[i].name);
 				}
 			}
 		});
