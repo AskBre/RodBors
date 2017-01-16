@@ -102,10 +102,12 @@ io.on('connection', function(socket){
 
 	// Regulering
 	socket.on('setIncPerClick', function(msg) {
+		incPerClick = msg;
 		io.emit('setIncPerClick', msg);
 	});
 
 	socket.on('setDecPerTick', function(msg) {
+		decPerTick = msg;
 		io.emit('setDecPerTick', msg);
 	});
 
