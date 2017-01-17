@@ -10,6 +10,10 @@ app.get('/bar', function(req, res){
 	res.sendFile(__dirname + '/bar.html');
 });
 
+app.get('/priser', function(req, res){
+	res.sendFile(__dirname + '/prices.html');
+});
+
 app.get('/regulering', function(req, res){
 	res.sendFile(__dirname + '/regulering.html');
 });
@@ -173,7 +177,6 @@ var items = [
 
 io.on('connection', function(socket){
 	// Defaults
-
 	socket.on('reqDefaults', function() {
 		io.emit('defIncPerClick', incPerClick);
 		io.emit('defDecPerTick', decPerTick);
@@ -222,5 +225,5 @@ setInterval(function(){
 }, 2000);
 
 http.listen(3000, function(){
-  console.log('listening on *:3000');
+	console.log('listening on *:3000');
 });

@@ -10,37 +10,22 @@
 	</head>
 	<body>
 		<canvas id="myChart" width="160" height="83" ></canvas>
+		<div id="prices">
+		</div>
 	</body>
-	<script> 
-
+	<script>
 		var socket = io();
 		var items;
+		var isPricesMade = false;
 
-		var isDefDefined = false;
-		var incPerClick = 0;
-		var decPerTick = 0;
-
-		// Get defaults from index.js 
 		socket.emit('reqDefaults');
-		socket.on('defIncPerClick', function(val) {
-			if(!isDefDefined) {
-				incPerClick = val;
-			}
-		});
-
-		socket.on('defDecPerTick', function(val) {
-			if(!isDefDefined) {
-				decPerTick = val;
-			}
-		});
-
 		socket.on('defItems', function(val) {
-			if(!isDefDefined) {
+			if(!isPricesMade) {
+				isPricesMade = true;
 				items = val;
-				isDefDefined = true;
+//				makePrices();
 
 				if(typeof chartData === "undefined") {
-//					deleteLocalStorage();
 					makeChart();
 				}
 			}
@@ -69,17 +54,22 @@
 					fontSize: 32
 				},
 				legend: {
-					display: false,
+					position: 'left',
+					fullWidth: true,
+					labels: {
+						padding: 100,
+						generateLabels: getNewLabels,
+						fontSize: 28,
+					}
 				},
-				maintainAspectRatio: true,
-				spanGaps: true,
+				showLines: false,
 				scales: {
 					xAxes: [{
-						ticks: {
-							beginAtZero:true
-						}
+						display: false,
+					}],
+					yAxes: [{
+						display: false,
 					}]
-
 				},
 				animation: {
 					duration: 1000
@@ -94,16 +84,15 @@
 
 		};
 
-		setInterval(function() {
-			console.log('Saving data');
-			localStorage.setItem("labels", JSON.stringify(chartData.labels));
-			for(var i=0; i<items.length; i++) {
-				var name = 'item' + i;
-				localStorage.setItem(name, JSON.stringify(items[i].dataset.data));
+		function getNewLabels(chart) {
+			var lab = Chart.defaults.global.legend.labels.generateLabels(chart);
+			for(var i=0; i<lab.length;i++) {
+				lab[i].text += ": " + items[i].price.toFixed(2).replace(/\./g, ",") + " NOK";
 			}
-		}, 10000);
+			return lab;
+		};
 
-		function fillItemsData() {
+function fillItemsData() {
 			if(localStorage.getItem("labels") !== null) {
 				console.log("Fetching old chartData");
 				chartData.labels = JSON.parse(localStorage.getItem('labels'));
@@ -123,29 +112,6 @@
 			}
 		};
 
-		function deleteLocalStorage() {
-			console.log("DELETING ALL LOCAL STORAGE!");
-			localStorage.removeItem('labels');
-			for(var i=0; i<items.length; i++) {
-				var name = 'item' + i;
-				localStorage.removeItem(name);
-			}
-		};
-
-		///////////
-		//Sockets//
-		///////////
-
-		// Bar
-		/*
-		socket.on('updatePrices', function(newPrices) {
-			console.log('Received ' + newPrices);
-			for(var i=0; i<items.length; i++) {
-				items[i].price = newPrices[i];
-			}
-
-		});
-		*/
 		socket.on('updatePrices', function(newPrices) {
 			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
 
@@ -157,16 +123,6 @@
 
 			}
 			myChart.update();
-		});
-
-		// Regulering
-		socket.on('setIncPerClick', function(msg){
-			incPerClick = msg;
-			console.log(incPerClick);
-		});
-
-		socket.on('setDecPerTick', function(msg){
-			decPerTick = msg;
 		});
 
 	</script>
