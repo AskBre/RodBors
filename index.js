@@ -182,7 +182,13 @@ io.on('connection', function(socket){
 
 	// Bar
 	socket.on('Purchase', function(msg) {
-		io.emit('Purchase', msg);
+		console.log('Received ' + msg);
+		for(var i=0; i<items.length; i++) {
+			if(items[i].dataset.label == msg) {
+				console.log('Incing ' + items[i].dataset.label);
+				items[i].price += incPerClick;
+			}
+		}
 	});
 
 	// Regulering
@@ -200,6 +206,20 @@ io.on('connection', function(socket){
 		io.emit('delLocalStorage');
 	});
 });
+
+// Inc and dec prices
+setInterval(function(){
+	var newPrices = [];
+	for(var i=0; i<items.length; i++) {
+		if(items[i].price > items[i].minPrice) {
+			items[i].price -= decPerTick;
+		}
+
+		newPrices.push(items[i].price);
+	}
+
+	io.emit('updatePrices', newPrices);
+}, 2000);
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

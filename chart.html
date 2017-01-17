@@ -47,7 +47,7 @@
 				isDefDefined = true;
 
 				if(typeof chartData === "undefined") {
-//					deleteLocalStorage();
+					deleteLocalStorage();
 					makeChart();
 				}
 			}
@@ -118,23 +118,6 @@
 			return lab;
 		};
 
-		
-
-		setInterval(function(){
-			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
-
-			chartData.labels.push(curTime);
-
-			for(var i=0; i<items.length; i++) {
-				items[i].dataset.data.push(items[i].price);
-
-				if(items[i].price > items[i].minPrice) {
-					items[i].price -= decPerTick;
-				}
-			}
-			myChart.update();
-		}, 2000);
-
 		setInterval(function() {
 			console.log('Saving data');
 			localStorage.setItem("labels", JSON.stringify(chartData.labels));
@@ -178,14 +161,26 @@
 		///////////
 
 		// Bar
-		// Send which button as message, not socket
-		socket.on('Purchase', function(msg) {
-			console.log('Received ' + msg);
+		/*
+		socket.on('updatePrices', function(newPrices) {
+			console.log('Received ' + newPrices);
 			for(var i=0; i<items.length; i++) {
-				if(items[i].dataset.label == msg) {
-					items[i].price += incPerClick;
-				}
+				items[i].price = newPrices[i];
 			}
+
+		});
+		*/
+		socket.on('updatePrices', function(newPrices) {
+			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
+
+			chartData.labels.push(curTime);
+
+			for(var i=0; i<items.length; i++) {
+				items[i].price = newPrices[i];
+				items[i].dataset.data.push(items[i].price);
+
+			}
+			myChart.update();
 		});
 
 		// Regulering
