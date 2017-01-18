@@ -198,7 +198,6 @@ setInterval(function(){
 	}
 
 	io.emit('updatePrices', newPrices);
-	newPrices = [];
 }, 1000);
 
 http.listen(3000, function(){

@@ -23,7 +23,6 @@
 			if(!isPricesMade) {
 				isPricesMade = true;
 				items = val;
-//				makePrices();
 
 				if(typeof chartData === "undefined") {
 					makeChart();
@@ -94,7 +93,7 @@
 			return lab;
 		};
 
-function fillItemsData() {
+		function fillItemsData() {
 			if(localStorage.getItem("labels") !== null) {
 				console.log("Fetching old chartData");
 				chartData.labels = JSON.parse(localStorage.getItem('labels'));

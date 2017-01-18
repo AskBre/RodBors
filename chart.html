@@ -49,7 +49,7 @@
 		var ctx = document.getElementById("myChart");
 
 		function makeChart() {
-			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
+			var curTime = moment().format("dd, DD.MM.YY, H:mm:ss");
 
 			chartData = {
 				labels: [curTime],
@@ -91,7 +91,6 @@
 				data: chartData,
 				options: chartOptions
 			});
-
 		};
 
 		setInterval(function() {
@@ -147,14 +146,13 @@
 		});
 		*/
 		socket.on('updatePrices', function(newPrices) {
-			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
+			var curTime = moment().utc().format("dd, DD.MM.YY, H:mm:ss");
 
 			chartData.labels.push(curTime);
 
 			for(var i=0; i<items.length; i++) {
 				items[i].price = newPrices[i];
 				items[i].dataset.data.push(items[i].price);
-
 			}
 			myChart.update();
 		});
