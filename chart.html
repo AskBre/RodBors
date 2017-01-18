@@ -146,7 +146,7 @@
 		});
 		*/
 		socket.on('updatePrices', function(newPrices) {
-			var curTime = moment().utc().format("dd, DD.MM.YY, H:mm:ss");
+			var curTime = moment().format("dd, DD.MM.YY, H:mm:ss");
 
 			chartData.labels.push(curTime);
 
