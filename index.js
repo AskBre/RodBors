@@ -53,12 +53,12 @@ var decPerTick = incPerClick * 0.25;
 var items = [
 	{
 		price: 59,
-		minPrice: 37,
+		minPrice: 36,
 		dataset: {
-			label: 'Sagene / Carlsberg',
+			label: 'Sagene | Carlsberg',
 			data: [0],
-			backgroundColor: 'rgba(255, 207, 112, 0.1)',
-			borderColor: 'rgba(255, 207, 112, 1)',
+			backgroundColor: 'rgba(255, 204, 0, 0.1)',
+			borderColor: 'rgba(255, 204, 0, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 
@@ -66,12 +66,12 @@ var items = [
 	},
 	{
 		price: 89,
-		minPrice: 37,
+		minPrice: 59,
 		dataset: {
-			label: "Brooklys lager / Eipa / Nøgne Ø / Crabbie's",
+			label: "Brooklyn | Nøgne Ø | Crabbie's",
 			data: [0],
-			backgroundColor: 'rgba(200, 190, 112, 0.1)',
-			borderColor: 'rgba(200, 190, 112, 1)',
+			backgroundColor: 'rgba(218, 165, 32, 0.1)',
+			borderColor: 'rgba(218, 165, 32, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 
@@ -79,48 +79,24 @@ var items = [
 	},
 	{
 		price: 72,
-		minPrice: 50,
+		minPrice: 39,
 		dataset: {
-			label: 'Calles Riesling',
+			label: 'Vin Glass (rød, hvit, cava)',
 			data: [0],
-			backgroundColor: 'rgba(255, 228, 185, 0.1)',
-			borderColor: 'rgba(255, 228, 185, 1)',
+			backgroundColor: 'rgba(255, 0, 0, 0.1)',
+			borderColor: 'rgba(255, 0, 0, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
 	},
 	{
 		price: 340,
-		minPrice: 50,
+		minPrice: 170,
 		dataset: {
-			label: 'Sancerre',
+			label: 'Vin Flaske',
 			data: [0],
-			backgroundColor: 'rgba(255, 218, 185, 0.1)',
-			borderColor: 'rgba(255, 218, 185, 1)',
-			borderWidth: 1,
-			pointRadius: 0
-		}
-	},
-	{
-		price: 72,
-		minPrice: 50,
-		dataset: {
-			label: 'Roagna Piemo te Barbera',
-			data: [0],
-			backgroundColor: 'rgba(114, 47, 55, 0.1)',
-			borderColor: 'rgba(114, 47, 55, 1)',
-			borderWidth: 1,
-			pointRadius: 0
-		}
-	},
-	{
-		price: 340,
-		minPrice: 50,
-		dataset: {
-			label: 'Cotes du Rhone',
-			data: [0],
-			backgroundColor: 'rgba(180, 47, 55, 0.1)',
-			borderColor: 'rgba(180, 47, 55, 1)',
+			backgroundColor: 'rgba(128, 0, 0, 0.1)',
+			borderColor: 'rgba(128, 0, 0, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -151,9 +127,9 @@ var items = [
 	},
 	{
 		price: 39,
-		minPrice: 10,
+		minPrice: 25,
 		dataset: {
-			label: 'Mineralvann / Carlsbrg alkoholfri',
+			label: 'Brus | Farris',
 			data: [0],
 			backgroundColor: 'rgba(64, 164, 223, 0.1',
 			borderColor: 'rgba(64, 164, 223, 1)',
@@ -222,7 +198,8 @@ setInterval(function(){
 	}
 
 	io.emit('updatePrices', newPrices);
-}, 2000);
+	newPrices = [];
+}, 1000);
 
 http.listen(3000, function(){
 	console.log('listening on *:3000');

@@ -36,10 +36,10 @@
 
 		socket.on('defItems', function(val) {
 			if(!isDefDefined) {
-				items = val;
 				isDefDefined = true;
 
 				if(typeof chartData === "undefined") {
+					items = val;
 //					deleteLocalStorage();
 					makeChart();
 				}
