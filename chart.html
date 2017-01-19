@@ -49,7 +49,7 @@
 		var ctx = document.getElementById("myChart");
 
 		function makeChart() {
-			var curTime = moment().format("dd, DD.MM.YY, H:mm:ss");
+			var curTime = moment().format("dd, DD.MM.YY, H:mm");
 
 			chartData = {
 				labels: [curTime],
@@ -100,7 +100,7 @@
 				var name = 'item' + i;
 				localStorage.setItem(name, JSON.stringify(items[i].dataset.data));
 			}
-		}, 10000);
+		}, 60000);
 
 		function fillItemsData() {
 			if(localStorage.getItem("labels") !== null) {
@@ -146,7 +146,7 @@
 		});
 		*/
 		socket.on('updatePrices', function(newPrices) {
-			var curTime = moment().format("dd, DD.MM.YY, H:mm:ss");
+			var curTime = moment().format("dd, DD.MM.YY, H:mm");
 
 			chartData.labels.push(curTime);
 

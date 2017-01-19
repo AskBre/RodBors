@@ -102,10 +102,10 @@ var items = [
 		}
 	},
 	{
-		price: 45,
+		price: 100,
 		minPrice: 10,
 		dataset: {
-			label: 'Bourbon / Whisky',
+			label: 'Bourbon | Whisky | Cognac',
 			data: [0],
 			backgroundColor: 'rgba(224, 137, 65, 0.1',
 			borderColor: 'rgba(224, 137, 65, 1)',
@@ -114,10 +114,10 @@ var items = [
 		}
 	},
 	{
-		price: 90,
-		minPrice: 50,
+		price: 100,
+		minPrice: 10,
 		dataset: {
-			label: 'Cognac / Gin / Vodka',
+			label: 'Gin | Vodka',
 			data: [0],
 			backgroundColor: 'rgba(173, 216, 230, 0.1',
 			borderColor: 'rgba(173, 216, 230, 1)',
@@ -129,7 +129,7 @@ var items = [
 		price: 39,
 		minPrice: 25,
 		dataset: {
-			label: 'Brus | Farris',
+			label: 'Mineralvann',
 			data: [0],
 			backgroundColor: 'rgba(64, 164, 223, 0.1',
 			borderColor: 'rgba(64, 164, 223, 1)',
@@ -149,6 +149,18 @@ var items = [
 			pointRadius: 0
 		}
 	},
+	{
+		price: 50,
+		minPrice: 10,
+		dataset: {
+			label: 'Kaffe | Te',
+			data: [0],
+			backgroundColor: 'rgba(190, 90, 30, 0.1',
+			borderColor: 'rgba(190, 90, 30, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	}
 ];
 
 io.on('connection', function(socket){
@@ -198,7 +210,7 @@ setInterval(function(){
 	}
 
 	io.emit('updatePrices', newPrices);
-}, 1000);
+}, 30000);
 
 http.listen(3000, function(){
 	console.log('listening on *:3000');
