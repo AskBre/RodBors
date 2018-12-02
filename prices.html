@@ -8,8 +8,13 @@
 
 		<title>Moskusbørsen</title>
 	</head>
+	<style type="text/css">
+		body {
+			overflow:hidden;
+		}
+	</style>
 	<body>
-		<canvas id="myChart" width="160" height="83" ></canvas>
+		<canvas id="myChart" width="10" height="10" ></canvas>
 		<div id="prices">
 		</div>
 	</body>
@@ -31,6 +36,8 @@
 		});
 
 		var ctx = document.getElementById("myChart");
+		ctx.style.backgroundColor = 'rgba(10,10,10,255)';
+		Chart.defaults.global.defaultFontColor = 'white';
 
 		function makeChart() {
 			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
@@ -49,18 +56,18 @@
 			chartOptions = {
 				title: {
 					display: true,
-					text: 'Moskusbørs',
+					text: 'Moskusbørsa',
 					fontSize: 32,
-//					padding: 100
+					padding: 50
 						
 				},
 				legend: {
-					position: 'top',
-					fullWidth: true,
+					position: 'left',
+					fullWidth: false,
 					labels: {
-						padding: 180,
+						padding: 24,
 						generateLabels: getNewLabels,
-						fontSize: 28,
+						fontSize: 24,
 					}
 				},
 				showLines: false,
@@ -88,7 +95,7 @@
 		function getNewLabels(chart) {
 			var lab = Chart.defaults.global.legend.labels.generateLabels(chart);
 			for(var i=0; i<lab.length;i++) {
-				lab[i].text += ": " + items[i].price.toFixed(2).replace(/\./g, ",") + " NOK";
+				lab[i].text += ": \t" + items[i].price.toFixed(2).replace(/\./g, ",") + " NOK";
 			}
 			return lab;
 		};

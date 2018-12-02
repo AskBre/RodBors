@@ -52,10 +52,10 @@ var incPerClick = 1;
 var decPerTick = incPerClick * 0.25;
 var items = [
 	{
-		price: 59,
-		minPrice: 36,
+		price: 78,
+		minPrice: 48,
 		dataset: {
-			label: 'Sagene | Carlsberg',
+			label: 'Dahls',
 			data: [0],
 			backgroundColor: 'rgba(255, 204, 0, 0.1)',
 			borderColor: 'rgba(255, 204, 0, 1)',
@@ -65,10 +65,23 @@ var items = [
 		}
 	},
 	{
-		price: 89,
-		minPrice: 59,
+		price: 88,
+		minPrice: 58,
 		dataset: {
-			label: "Brooklyn | Nøgne Ø | Crabbie's",
+			label: "Urquell",
+			data: [0],
+			backgroundColor: 'rgba(230, 290, 20, 0.1)',
+			borderColor: 'rgba(230, 290, 20, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+
+		}
+	},
+	{
+		price: 84,
+		minPrice: 54,
+		dataset: {
+			label: "Bayer",
 			data: [0],
 			backgroundColor: 'rgba(218, 165, 32, 0.1)',
 			borderColor: 'rgba(218, 165, 32, 1)',
@@ -78,10 +91,23 @@ var items = [
 		}
 	},
 	{
-		price: 72,
-		minPrice: 39,
+		price: 92,
+		minPrice: 62,
 		dataset: {
-			label: 'Vin Glass (rød, hvit, cava)',
+			label: "Glutenfritt Øl",
+			data: [0],
+			backgroundColor: 'rgba(245, 224, 80, 0.1)',
+			borderColor: 'rgba(245, 224, 80, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+
+		}
+	},
+	{
+		price: 82,
+		minPrice: 52,
+		dataset: {
+			label: 'Rødvin Glass',
 			data: [0],
 			backgroundColor: 'rgba(255, 0, 0, 0.1)',
 			borderColor: 'rgba(255, 0, 0, 1)',
@@ -90,37 +116,37 @@ var items = [
 		}
 	},
 	{
-		price: 340,
-		minPrice: 170,
+		price: 82,
+		minPrice: 52,
 		dataset: {
-			label: 'Vin Flaske',
+			label: 'Hvitvin Glass',
 			data: [0],
-			backgroundColor: 'rgba(128, 0, 0, 0.1)',
-			borderColor: 'rgba(128, 0, 0, 1)',
+			backgroundColor: 'rgba(255, 255, 0, 0.1)',
+			borderColor: 'rgba(255, 255, 0, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
 	},
 	{
-		price: 100,
-		minPrice: 10,
+		price: 88,
+		minPrice: 58,
 		dataset: {
-			label: 'Bourbon | Whisky | Cognac',
+			label: 'Musserende Glass',
 			data: [0],
-			backgroundColor: 'rgba(224, 137, 65, 0.1',
-			borderColor: 'rgba(224, 137, 65, 1)',
+			backgroundColor: 'rgba(255, 255, 255, 0.1)',
+			borderColor: 'rgba(255, 255, 255, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
 	},
 	{
-		price: 100,
-		minPrice: 10,
+		price: 30,
+		minPrice: 5,
 		dataset: {
-			label: 'Gin | Vodka',
+			label: 'Kaffe',
 			data: [0],
-			backgroundColor: 'rgba(173, 216, 230, 0.1',
-			borderColor: 'rgba(173, 216, 230, 1)',
+			backgroundColor: 'rgba(190, 90, 30, 0.1',
+			borderColor: 'rgba(190, 90, 30, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -129,7 +155,7 @@ var items = [
 		price: 39,
 		minPrice: 25,
 		dataset: {
-			label: 'Mineralvann',
+			label: 'Cola',
 			data: [0],
 			backgroundColor: 'rgba(64, 164, 223, 0.1',
 			borderColor: 'rgba(64, 164, 223, 1)',
@@ -138,29 +164,53 @@ var items = [
 		}
 	},
 	{
-		price: 100,
-		minPrice: 10,
+		price: 108,
+		minPrice: 78,
 		dataset: {
-			label: 'Snacks',
+			label: 'Gin Tonic',
 			data: [0],
-			backgroundColor: 'rgba(30, 128, 30, 0.1',
-			borderColor: 'rgba(30, 128, 30, 1)',
+			backgroundColor: 'rgba(235, 242, 223, 0.1)',
+			borderColor: 'rgba(235, 242, 223, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
 	},
 	{
-		price: 50,
-		minPrice: 10,
+		price: 128,
+		minPrice: 98,
 		dataset: {
-			label: 'Kaffe | Te',
+			label: 'Slush',
 			data: [0],
-			backgroundColor: 'rgba(190, 90, 30, 0.1',
-			borderColor: 'rgba(190, 90, 30, 1)',
+			backgroundColor: 'rgba(255, 119, 255, 0.1)',
+			borderColor: 'rgba(255, 119, 255, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
-	}
+	},
+	{
+		price: 88,
+		minPrice: 58,
+		dataset: {
+			label: 'Akevitt',
+			data: [0],
+			backgroundColor: 'rgba(255, 255, 191, 0.1)',
+			borderColor: 'rgba(255, 255, 191, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+	{
+		price: 78,
+		minPrice: 48,
+		dataset: {
+			label: 'Vodka',
+			data: [0],
+			backgroundColor: 'rgba(173, 216, 230, 0.1',
+			borderColor: 'rgba(173, 216, 230, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
 ];
 
 io.on('connection', function(socket){

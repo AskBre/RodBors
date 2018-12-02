@@ -8,9 +8,15 @@
 
 		<title>Rodeløkka Børs</title>
 	</head>
-	<body>
-		<canvas id="myChart" width="160" height="83" ></canvas>
+	<style type="text/css">
+		body {
+			overflow:hidden;
+		}
+	</style>
+	<body bgcolor="#101010">
+		<canvas id="myChart" width="16" height="9" ></canvas>
 	</body>
+
 	<script> 
 
 		var socket = io();
@@ -47,6 +53,10 @@
 		});
 
 		var ctx = document.getElementById("myChart");
+		ctx.style.backgroundColor = 'rgba(10,10,10,255)';
+		Chart.defaults.global.defaultFontColor = 'white';
+		Chart.defaults.global.defaultFontSize = '24';
+		Chart.defaults.global.defaultFontFamily = 'Arial';
 
 		function makeChart() {
 			var curTime = moment().format("dd, DD.MM.YY, H:mm");
@@ -60,16 +70,22 @@
 				chartData.datasets.push(items[i].dataset);
 			}
 
-			fillItemsData();
-
 			chartOptions = {
 				title: {
-					display: true,
-					text: 'Moskusbørsen',
+					display: false,
+					text: 'Moskusbørsa',
 					fontSize: 32
 				},
 				legend: {
-					display: false,
+					position: 'right',
+					fullWidth: false,
+					labels: {
+						padding: 100,
+						generateLabels: getNewLabels,
+						fontSize: 50,
+						fontStyle: 'normal',
+//						fontFamily: 'serif',
+					}
 				},
 				maintainAspectRatio: true,
 				spanGaps: true,
@@ -101,6 +117,15 @@
 				localStorage.setItem(name, JSON.stringify(items[i].dataset.data));
 			}
 		}, 60000);
+
+		function getNewLabels(chart) {
+			var lab = Chart.defaults.global.legend.labels.generateLabels(chart);
+			for(var i=0; i<lab.length;i++) {
+				lab[i].text += ": \t" + items[i].price.toFixed(2).replace(/\./g, ",") + " NOK";
+			}
+			return lab;
+		};
+
 
 		function fillItemsData() {
 			if(localStorage.getItem("labels") !== null) {
