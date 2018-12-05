@@ -39,7 +39,7 @@
 		var ctx = document.getElementById("myChart");
 		ctx.style.backgroundColor = 'rgba(10,10,10,255)';
 		Chart.defaults.global.defaultFontColor = 'white';
-		Chart.defaults.global.defaultFontFamily = 'Cantarell';
+		Chart.defaults.global.defaultFontFamily = 'Noto Sans Mono';
 
 		function makeChart() {
 			var curTime = moment().format("dd, DD.MM.YY, h:mm:ss");
@@ -60,16 +60,17 @@
 					display: false,
 					text: 'Moskusbørsa',
 					fontSize: 32,
-					padding: 50
+					padding: 80
 						
 				},
 				legend: {
 					position: 'left',
 					fullWidth: true,
 					labels: {
-						padding: 80,
+						padding: 105,
 						generateLabels: getNewLabels,
-						fontSize: 48,
+						fontSize: 28,
+//						boxWidth: 10
 					}
 				},
 				showLines: false,
@@ -97,7 +98,12 @@
 		function getNewLabels(chart) {
 			var lab = Chart.defaults.global.legend.labels.generateLabels(chart);
 			for(var i=0; i<lab.length;i++) {
-				lab[i].text += ": \t" + items[i].price.toFixed(2).replace(/\./g, ",") + " NOK";
+				var price = items[i].price.toFixed(0).replace(/\,/g, ",");
+				console.log("price" + price);
+				console.log("pricelength" + price.toString().length);
+				var count = 40-lab[i].text.length-price.toString().length;
+				console.log("count" + count);
+				lab[i].text += ".".repeat(count) + price + ",-";
 			}
 			return lab;
 		};
