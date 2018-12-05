@@ -55,10 +55,10 @@ var items = [
 		price: 78,
 		minPrice: 48,
 		dataset: {
-			label: 'Dahls',
+			label: 'Folkets Hus (Dahls)',
 			data: [0],
-			backgroundColor: 'rgba(255, 204, 0, 0.1)',
-			borderColor: 'rgba(255, 204, 0, 1)',
+			backgroundColor: 'rgba(0,60,48, 0.2)',
+			borderColor: 'rgba(0,60,48, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 
@@ -68,10 +68,10 @@ var items = [
 		price: 88,
 		minPrice: 58,
 		dataset: {
-			label: "Urquell",
+			label: "Bæsj på scenen (Urquell)",
 			data: [0],
-			backgroundColor: 'rgba(230, 290, 20, 0.1)',
-			borderColor: 'rgba(230, 290, 20, 1)',
+			backgroundColor: 'rgba(140,81,10, 0.2)',
+			borderColor: 'rgba(140,81,10, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 
@@ -81,10 +81,10 @@ var items = [
 		price: 84,
 		minPrice: 54,
 		dataset: {
-			label: "Bayer",
+			label: "Stiftelsesloven (Bayer)",
 			data: [0],
-			backgroundColor: 'rgba(218, 165, 32, 0.1)',
-			borderColor: 'rgba(218, 165, 32, 1)',
+			backgroundColor: 'rgba(191,129,45, 0.2)',
+			borderColor: 'rgba(191,129,45, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 
@@ -94,10 +94,10 @@ var items = [
 		price: 92,
 		minPrice: 62,
 		dataset: {
-			label: "Glutenfritt Øl",
+			label: "Ananiassen (Glutenfritt Øl)",
 			data: [0],
-			backgroundColor: 'rgba(245, 224, 80, 0.1)',
-			borderColor: 'rgba(245, 224, 80, 1)',
+			backgroundColor: 'rgba(223,194,125, 0.2)',
+			borderColor: 'rgba(223,194,125, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 
@@ -107,10 +107,10 @@ var items = [
 		price: 82,
 		minPrice: 52,
 		dataset: {
-			label: 'Rødvin Glass',
+			label: 'Blod&Nakenhet (Rødvin)',
 			data: [0],
-			backgroundColor: 'rgba(255, 0, 0, 0.1)',
-			borderColor: 'rgba(255, 0, 0, 1)',
+			backgroundColor: 'rgba(88, 11, 28, 0.2)',
+			borderColor: 'rgba(88, 11, 28, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -119,10 +119,10 @@ var items = [
 		price: 82,
 		minPrice: 52,
 		dataset: {
-			label: 'Hvitvin Glass',
+			label: 'Tiss på scenen (Hvitvin)',
 			data: [0],
-			backgroundColor: 'rgba(255, 255, 0, 0.1)',
-			borderColor: 'rgba(255, 255, 0, 1)',
+			backgroundColor: 'rgba(223, 200, 63, 0.2)',
+			borderColor: 'rgba(223, 200, 63, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -131,10 +131,10 @@ var items = [
 		price: 88,
 		minPrice: 58,
 		dataset: {
-			label: 'Musserende Glass',
+			label: 'New Public Management (Musserende)',
 			data: [0],
-			backgroundColor: 'rgba(255, 255, 255, 0.1)',
-			borderColor: 'rgba(255, 255, 255, 1)',
+			backgroundColor: 'rgba(199,234,229, 0.2)',
+			borderColor: 'rgba(199,234,229, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -143,10 +143,10 @@ var items = [
 		price: 30,
 		minPrice: 5,
 		dataset: {
-			label: 'Kaffe',
+			label: 'Dukketeater (Kaffe)',
 			data: [0],
-			backgroundColor: 'rgba(190, 90, 30, 0.1',
-			borderColor: 'rgba(190, 90, 30, 1)',
+			backgroundColor: 'rgba(84,48,5, 0.2)',
+			borderColor: 'rgba(84,48,5, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -155,22 +155,10 @@ var items = [
 		price: 39,
 		minPrice: 25,
 		dataset: {
-			label: 'Cola',
+			label: 'Internassjonal (Cola)',
 			data: [0],
-			backgroundColor: 'rgba(64, 164, 223, 0.1',
-			borderColor: 'rgba(64, 164, 223, 1)',
-			borderWidth: 1,
-			pointRadius: 0
-		}
-	},
-	{
-		price: 108,
-		minPrice: 78,
-		dataset: {
-			label: 'Gin Tonic',
-			data: [0],
-			backgroundColor: 'rgba(235, 242, 223, 0.1)',
-			borderColor: 'rgba(235, 242, 223, 1)',
+			backgroundColor: 'rgba(53,151,143, 0.2)',
+			borderColor: 'rgba(53,151,143, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -179,22 +167,35 @@ var items = [
 		price: 128,
 		minPrice: 98,
 		dataset: {
-			label: 'Slush',
+			label: 'Rosendal Teater (Slush)',
 			data: [0],
-			backgroundColor: 'rgba(255, 119, 255, 0.1)',
-			borderColor: 'rgba(255, 119, 255, 1)',
+			backgroundColor: 'rgba(1,102,94, 0.2)',
+			borderColor: 'rgba(1,102,94, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
 	},
 	{
+		price: 108,
+		minPrice: 78,
+		dataset: {
+			label: 'Rusten (Gin Tonic)',
+			data: [0],
+			backgroundColor: 'rgba(128,205,193, 0.2)',
+			borderColor: 'rgba(128,205,193, 1)',
+			borderWidth: 1,
+			pointRadius: 0
+		}
+	},
+
+	{
 		price: 88,
 		minPrice: 58,
 		dataset: {
-			label: 'Akevitt',
+			label: 'Teaterhuset Avant Garden (Akevitt)',
 			data: [0],
-			backgroundColor: 'rgba(255, 255, 191, 0.1)',
-			borderColor: 'rgba(255, 255, 191, 1)',
+			backgroundColor: 'rgba(246,232,195, 0.2)',
+			borderColor: 'rgba(246,232,195, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}
@@ -203,10 +204,10 @@ var items = [
 		price: 78,
 		minPrice: 48,
 		dataset: {
-			label: 'Vodka',
+			label: 'Likestilt dramaturgi (Vodka)',
 			data: [0],
-			backgroundColor: 'rgba(173, 216, 230, 0.1',
-			borderColor: 'rgba(173, 216, 230, 1)',
+			backgroundColor: 'rgba(245,245,245, 0.2)',
+			borderColor: 'rgba(245,245,245, 1)',
 			borderWidth: 1,
 			pointRadius: 0
 		}

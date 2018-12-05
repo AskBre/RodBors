@@ -6,11 +6,12 @@
 		<script	src="/moment.js"></script>
 		<script	src="/chart.js"></script>
 
-		<title>Rodeløkka Børs</title>
+		<title>Moskusbørsen</title>
 	</head>
 	<style type="text/css">
 		body {
 			overflow:hidden;
+			letter-spacing: 2px;
 		}
 	</style>
 	<body bgcolor="#101010">
@@ -56,7 +57,7 @@
 		ctx.style.backgroundColor = 'rgba(10,10,10,255)';
 		Chart.defaults.global.defaultFontColor = 'white';
 		Chart.defaults.global.defaultFontSize = '24';
-		Chart.defaults.global.defaultFontFamily = 'Arial';
+		Chart.defaults.global.defaultFontFamily = 'Noto Sans Mono';
 
 		function makeChart() {
 			var curTime = moment().format("dd, DD.MM.YY, H:mm");
@@ -78,13 +79,11 @@
 				},
 				legend: {
 					position: 'right',
-					fullWidth: false,
+					fullWidth: true,
 					labels: {
-						padding: 100,
+						padding: 90,
 						generateLabels: getNewLabels,
-						fontSize: 50,
-						fontStyle: 'normal',
-//						fontFamily: 'serif',
+						fontSize: 40,
 					}
 				},
 				maintainAspectRatio: true,
@@ -121,7 +120,12 @@
 		function getNewLabels(chart) {
 			var lab = Chart.defaults.global.legend.labels.generateLabels(chart);
 			for(var i=0; i<lab.length;i++) {
-				lab[i].text += ": \t" + items[i].price.toFixed(2).replace(/\./g, ",") + " NOK";
+				var price = items[i].price.toFixed(0).replace(/\,/g, ",");
+				console.log("price" + price);
+				console.log("pricelength" + price.toString().length);
+				var count = 40-lab[i].text.length-price.toString().length;
+				console.log("count" + count);
+				lab[i].text += ".".repeat(count) + price + ",-";
 			}
 			return lab;
 		};
