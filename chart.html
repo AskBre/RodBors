@@ -6,7 +6,7 @@
 		<script	src="/moment.js"></script>
 		<script	src="/chart.js"></script>
 
-		<title>Rodeløkka Børs</title>
+		<title>Moskus�rsen</title>
 	</head>
 	<style type="text/css">
 		body {
@@ -14,7 +14,7 @@
 		}
 	</style>
 	<body bgcolor="#101010">
-		<canvas id="myChart" width="16" height="9" ></canvas>
+		<canvas id="myChart" width="160" height="85" ></canvas>
 	</body>
 
 	<script> 
@@ -55,7 +55,7 @@
 		var ctx = document.getElementById("myChart");
 		ctx.style.backgroundColor = 'rgba(10,10,10,255)';
 		Chart.defaults.global.defaultFontColor = 'white';
-		Chart.defaults.global.defaultFontSize = '24';
+//		Chart.defaults.global.defaultFontSize = '24';
 		Chart.defaults.global.defaultFontFamily = 'Arial';
 
 		function makeChart() {
@@ -74,23 +74,16 @@
 				title: {
 					display: false,
 					text: 'Moskusbørsa',
-					fontSize: 32
+					fontSize: 12
 				},
 				legend: {
-					position: 'right',
-					fullWidth: false,
-					labels: {
-						padding: 100,
-						generateLabels: getNewLabels,
-						fontSize: 50,
-						fontStyle: 'normal',
-//						fontFamily: 'serif',
-					}
+					display: false
 				},
 				maintainAspectRatio: true,
 				spanGaps: true,
 				scales: {
 					xAxes: [{
+						color: 'grey',
 						ticks: {
 							beginAtZero:true
 						}
